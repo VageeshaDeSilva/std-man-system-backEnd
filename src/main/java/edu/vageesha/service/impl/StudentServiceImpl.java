@@ -10,6 +10,7 @@ import org.apache.catalina.mapper.Mapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +26,20 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentEntity> getAll() {
         return (List<StudentEntity>) studentRepository.findAll();
+    }
+
+    @Override
+    public boolean removeStudent(Long id) {
+        if(studentRepository.existsById(id)){
+            studentRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Student searchById(Long id) {
+        Optional<StudentEntity> stdById = studentRepository.findById(id);
+        return objectMapper.convertValue(stdById,Student.class);
     }
 }
