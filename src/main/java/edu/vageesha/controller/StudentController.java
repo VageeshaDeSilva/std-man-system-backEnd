@@ -29,6 +29,16 @@ public class StudentController {
         return studentService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> searchStudentById(@PathVariable Long id){
+        return ResponseEntity.ok(studentService.searchById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student){
+        return ResponseEntity.ok(studentService.updateStudent(id,student));
+    }
+
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> removeStudent(@PathVariable Long id){
@@ -36,11 +46,5 @@ public class StudentController {
                 ResponseEntity.ok("Deleted"):
                 ResponseEntity.notFound().build();
 
-    }
-
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Student searchStudentById(@PathVariable Long id){
-        return studentService.searchById(id);
     }
 }

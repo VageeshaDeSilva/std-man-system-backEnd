@@ -8,6 +8,8 @@ import java.util.List;
 public interface StudentService {
     void addStudent(Student student);
     List<StudentEntity> getAll();
-    boolean removeStudent(Long id);
     Student searchById(Long id);
+    Student updateStudent(Long id,Student student);
+    boolean removeStudent(Long id);
+
 }

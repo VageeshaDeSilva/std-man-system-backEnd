@@ -3,6 +3,7 @@ package edu.vageesha.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.vageesha.dto.Student;
 import edu.vageesha.entity.StudentEntity;
+import edu.vageesha.exception.ResourceNotFoundException;
 import edu.vageesha.repository.StudentRepository;
 import edu.vageesha.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,28 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Student searchById(Long id) {
+        StudentEntity stdById = studentRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Student is NOT found by this id = " + id));
+        return objectMapper.convertValue(stdById,Student.class);
+    }
+
+    @Override
+    public Student updateStudent(Long id,Student student) {
+        StudentEntity studentEntity = studentRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Student is NOT found by this id = " + id));
+
+        studentEntity.setName(student.getName());
+        studentEntity.setAge(student.getAge());
+        studentEntity.setSchool(student.getSchool());
+        studentEntity.setAddress(student.getAddress());
+
+        studentRepository.save(studentEntity);
+
+        return objectMapper.convertValue(studentEntity,Student.class);
+    }
+
+    @Override
     public boolean removeStudent(Long id) {
         if(studentRepository.existsById(id)){
             studentRepository.deleteById(id);
@@ -37,9 +60,7 @@ public class StudentServiceImpl implements StudentService {
         return false;
     }
 
-    @Override
-    public Student searchById(Long id) {
-        Optional<StudentEntity> stdById = studentRepository.findById(id);
-        return objectMapper.convertValue(stdById,Student.class);
-    }
+
+
+
 }
