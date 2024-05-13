@@ -19,9 +19,10 @@ public class StudentServiceImpl implements StudentService {
     final StudentRepository studentRepository;
     final ObjectMapper objectMapper;
     @Override
-    public void addStudent(Student student) {
+    public StudentEntity addStudent(Student student) {
         StudentEntity map = objectMapper.convertValue(student, StudentEntity.class);
         studentRepository.save(map);
+        return map;
     }
 
     @Override

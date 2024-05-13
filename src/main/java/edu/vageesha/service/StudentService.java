@@ -6,7 +6,7 @@ import edu.vageesha.entity.StudentEntity;
 import java.util.List;
 
 public interface StudentService {
-    void addStudent(Student student);
+    StudentEntity addStudent(Student student);
     List<StudentEntity> getAll();
     Student searchById(Long id);
     Student updateStudent(Long id,Student student);
