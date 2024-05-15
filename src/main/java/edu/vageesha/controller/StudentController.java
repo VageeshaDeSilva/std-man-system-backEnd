@@ -39,7 +39,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.updateStudent(id,student));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> removeStudent(@PathVariable Long id){
         return studentService.removeStudent(id)?
